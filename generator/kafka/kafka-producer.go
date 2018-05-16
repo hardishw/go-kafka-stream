@@ -1,12 +1,11 @@
-package main
+package kafka
 
 import (
 	"fmt"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
-  "./generator"
 )
 
-func main() {
+func SendMsgs(topic string, messages []string) {
 
 	p, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": "kafka"})
 	if err != nil {
@@ -28,8 +27,7 @@ func main() {
 	}()
 
 	// Produce messages to topic (asynchronously)
-	topic := "myTopic"
-	for _, message := range generator.CreateEvents(100) {
+	for _, message := range messages {
 		p.Produce(&kafka.Message{
 			TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
 			Value: []byte(message),
