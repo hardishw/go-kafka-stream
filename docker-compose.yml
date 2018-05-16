@@ -8,3 +8,12 @@ services:
   generator:
     build: ./generator/
     image: hardishw/generator
+    depends_on:
+      - kafka
+    command: ["-type=stream","-time=60","-topic=testTopic"]
+  counter:
+    build: ./counter/
+    image: hardishw/counter
+    depends_on:
+      - kafka
+    command: ["-topic=testTopic"]

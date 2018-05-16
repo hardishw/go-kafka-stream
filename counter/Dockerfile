@@ -4,10 +4,10 @@ RUN apt-get update && git clone https://github.com/edenhill/librdkafka.git && \
 	cd librdkafka && ./configure --prefix /usr && make && make install && \
 	go get -u github.com/confluentinc/confluent-kafka-go/kafka
 
-ADD . /opt/generator-app/
+ADD . /opt/counter-app/
 
-WORKDIR /opt/generator-app/app/
+WORKDIR /opt/counter-app/
 
-RUN go build .
+RUN go build counter.go
 
-ENTRYPOINT ["/opt/generator-app/app/app"]
+ENTRYPOINT ["/opt/counter-app/counter"]
